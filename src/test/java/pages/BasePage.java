@@ -6,20 +6,25 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BasePage {
     private final WebDriver driver;
-    @FindBy(xpath = "//button[@ng-click='addCust()']")
+
+    @FindBy(css = "[ng-class='btnClass1']")
     private WebElement addCustomerButton;
-    @FindBy(xpath = "//button[contains(text(),'Customers')]")
+
+    @FindBy(css = "[ng-class='btnClass3']")
     private WebElement customersButton;
+
     public BasePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
+
     public RegistrationPage clickAddCustomerButton() {
         addCustomerButton.click();
         return new RegistrationPage(driver);
     }
-    public ListOfCustomersPage clickOnCustomersButton() {
+
+    public CustomersListPage clickOnCustomersButton() {
         customersButton.click();
-        return new ListOfCustomersPage(driver);
+        return new CustomersListPage(driver);
     }
 }

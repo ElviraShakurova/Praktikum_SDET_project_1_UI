@@ -11,64 +11,60 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ListOfCustomersPage {
+public class CustomersListPage {
     private final WebDriver driver;
     private final WebDriverWait wait;
     @FindBy(css = "input[placeholder=\'Search Customer\']")
     private WebElement inputSearch;
-    @FindBy(xpath = "//table[@class='table table-bordered table-striped']") // //td[@class='ng-binding']
+    @FindBy(xpath = "//tbody/tr ")
     private WebElement searchResults;
-    @FindBy(xpath = "//td[a[contains(text(), 'First Name')]]")
+    @FindBy(css = "a[ng-click*='fName']")
     private WebElement firstNameSort;
-    @FindBy(xpath = "//td[contains(text(), 'Albus') or contains(text(), 'Ron') or contains(text(), 'Hermoine') or contains(text(), 'Neville')]")
+    @FindBy(css = "tbody tr")
     private List<WebElement> tableOfCustomers;
-    public ListOfCustomersPage(WebDriver driver) {
+
+    public CustomersListPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         wait = new WebDriverWait(driver, EnvHelper.getExplicitWaitDuration());
     }
+
     @Step("Нажатие на кнопку сортировки по имени")
-    public ListOfCustomersPage clickOnFirstNameSort() {
+    public CustomersListPage clickOnFirstNameSort() {
         wait.until(ExpectedConditions.visibilityOf(firstNameSort));
         firstNameSort.click();
         return this;
     }
-    @Step("Сортировка имен в алфавитном порядке")
-    public List<String> getSortedTableOfCustomers() {
-        List<String> cellTexts = new ArrayList<>();
-        for (WebElement cell : tableOfCustomers) {
-            cellTexts.add(cell.getText());
+
+    @Step("Получение списка текстовых значений элементов таблицы")
+    public List<String> getTableText(){
+        List<String> rowTexts = new ArrayList<>();
+        for (WebElement row : tableOfCustomers) {
+            rowTexts.add(row.getText());
         }
-        Collections.sort(cellTexts);
-        return cellTexts;
+        return rowTexts;
     }
-    @Step("Сортировка имен в порядке обратном алфавиту")
-    public boolean isTableOfCustomersSortedInReverseOrder() {
-        List<String> reverseTexts = new ArrayList<>();
-        for (WebElement cell : tableOfCustomers) {
-            reverseTexts.add(cell.getText());
-        }
-        List<String> sortedCellTexts = new ArrayList<>(reverseTexts);
-        Collections.sort(sortedCellTexts, Collections.reverseOrder());
-        return reverseTexts.equals(sortedCellTexts);
-    }
+
     @Step("Нажатие на поле поиска клиента")
-    public ListOfCustomersPage clickOnInputSearch() {
+    public CustomersListPage clickOnInputSearch() {
         wait.until(ExpectedConditions.visibilityOf(inputSearch));
         inputSearch.click();
         return this;
     }
+
     @Step("Ввод запроса в поле поиска клиента")
-    public ListOfCustomersPage setInputSearch(String searchQuery){
+    public CustomersListPage setInputSearch(String searchQuery){
         inputSearch.sendKeys(searchQuery);
         return this;
     }
+
     @Step("Получение поисковой выдачи после ввода данных в поле поиска")
     public String getSearchResults() {
         return searchResults.getText();
     }
+
     @Step("Очистка поля поиска клиента")
-    public ListOfCustomersPage clearSearch() {
+    public CustomersListPage clearSearch() {
         inputSearch.clear();
         return this;
     }

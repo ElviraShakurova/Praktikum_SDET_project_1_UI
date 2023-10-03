@@ -22,32 +22,38 @@ public class RegistrationPage {
     @FindBy(css = ".btn.btn-default")
     private WebElement addCustomerButton;
     private WebElement alertSuccess;
+
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         wait = new WebDriverWait(driver, EnvHelper.getExplicitWaitDuration());
     }
+
     @Step("Ввод имени")
     public RegistrationPage setInputFirstName(String firstName) {
         wait.until(ExpectedConditions.visibilityOf(inputFirstName));
         inputFirstName.sendKeys(firstName);
         return this;
     }
+
     @Step("Ввод фамилии")
     public RegistrationPage setInputLastName(String lastName) {
         inputLastName.sendKeys(lastName);
         return this;
     }
+
     @Step("Ввод фамилии")
     public RegistrationPage setInputPostCode(String postCode) {
         inputPostCode.sendKeys(postCode);
         return this;
     }
+
     @Step("Нажатие на кнопку 'Добавить клиента'")
     public RegistrationPage clickOnAddCustomerButton() {
         addCustomerButton.click();
         return this;
     }
+
     @Step("Проверка успешного сообщения")
     public RegistrationPage successAlert() {
         WebDriverWait wait = new WebDriverWait(driver, EnvHelper.getExplicitWaitDuration());

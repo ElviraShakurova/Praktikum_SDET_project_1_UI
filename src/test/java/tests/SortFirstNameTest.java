@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import pages.BasePage;
-import pages.ListOfCustomersPage;
+import pages.CustomersListPage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,18 +13,31 @@ import java.util.List;
 public class SortFirstNameTest {
     @Rule
     public BaseTest driverRule = new BaseTest();
-    @DisplayName("Тест сортировки клиента по имени")
-    @Description("Тест проверяет сортировку клиента по имени в алфавитном порядке и порядке обратном алфавиту")
+
+    @DisplayName("Тест сортировки клиента по имени в порядке обратном алфавиту")
+    @Description("Тест проверяет сортировку клиента по имени в порядке обратном алфавиту")
     @Test
-    public void testSortFirstName(){
+    public void testSortFirstNameInReverseOrder(){
         BasePage basePage = new BasePage(driverRule.getDriver());
-        ListOfCustomersPage listOfCustomersPage = basePage.clickOnCustomersButton();
-        listOfCustomersPage.clickOnFirstNameSort();
-        Assert.assertTrue(listOfCustomersPage.isTableOfCustomersSortedInReverseOrder());
-        listOfCustomersPage.clickOnFirstNameSort();
-        List<String> sortedList = listOfCustomersPage.getSortedTableOfCustomers();
-        List<String> originalList = new ArrayList<>(sortedList);
-        Collections.sort(originalList);
-        Assert.assertEquals(originalList, sortedList);
+        CustomersListPage customersListPage = basePage.clickOnCustomersButton();
+        customersListPage.clickOnFirstNameSort();
+        List<String> sortedTableText = customersListPage.getTableText();
+        List<String> expectedTableText = new ArrayList<>(sortedTableText);
+        Collections.sort(expectedTableText, Collections.reverseOrder());
+        Assert.assertEquals(sortedTableText, expectedTableText);
+    }
+
+    @DisplayName("Тест сортировки клиента по имени по алфавиту")
+    @Description("Тест проверяет сортировку клиента по имени в алфавитном порядке")
+    @Test
+    public void testSortFirstNameInOrder(){
+        BasePage basePage = new BasePage(driverRule.getDriver());
+        CustomersListPage customersListPage = basePage.clickOnCustomersButton();
+        customersListPage.clickOnFirstNameSort();
+        customersListPage.clickOnFirstNameSort();
+        List<String> sortedTableText = customersListPage.getTableText();
+        List<String> expectedTableText = new ArrayList<>(sortedTableText);
+        Collections.sort(expectedTableText);
+        Assert.assertEquals(sortedTableText, expectedTableText); // Проверяем, что отсортированный список совпадает с ожидаемым списком
     }
 }
