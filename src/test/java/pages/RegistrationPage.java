@@ -12,16 +12,20 @@ import static org.junit.Assert.assertTrue;
 
 public class RegistrationPage {
     private final WebDriver driver;
+
     private final WebDriverWait wait;
+
     @FindBy(css = "input[ng-model='fName'][placeholder='First Name'][required]")
     private WebElement inputFirstName;
+
     @FindBy(css = "input[ng-model='lName'][placeholder='Last Name'][required]")
     private WebElement inputLastName;
+
     @FindBy(css = "input[ng-model='postCd'][placeholder='Post Code'][required]")
     private WebElement inputPostCode;
+
     @FindBy(css = ".btn.btn-default")
     private WebElement addCustomerButton;
-    private WebElement alertSuccess;
 
     public RegistrationPage(WebDriver driver) {
         this.driver = driver;

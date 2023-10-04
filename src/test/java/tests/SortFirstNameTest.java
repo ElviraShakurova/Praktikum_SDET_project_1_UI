@@ -19,7 +19,7 @@ public class SortFirstNameTest {
     @Test
     public void testSortFirstNameInReverseOrder(){
         BasePage basePage = new BasePage(driverRule.getDriver());
-        CustomersListPage customersListPage = basePage.clickOnCustomersButton();
+        CustomersListPage customersListPage = basePage.clickCustomersButton();
         customersListPage.clickOnFirstNameSort();
         List<String> sortedTableText = customersListPage.getTableText();
         List<String> expectedTableText = new ArrayList<>(sortedTableText);
@@ -32,12 +32,12 @@ public class SortFirstNameTest {
     @Test
     public void testSortFirstNameInOrder(){
         BasePage basePage = new BasePage(driverRule.getDriver());
-        CustomersListPage customersListPage = basePage.clickOnCustomersButton();
+        CustomersListPage customersListPage = basePage.clickCustomersButton();
         customersListPage.clickOnFirstNameSort();
         customersListPage.clickOnFirstNameSort();
         List<String> sortedTableText = customersListPage.getTableText();
         List<String> expectedTableText = new ArrayList<>(sortedTableText);
         Collections.sort(expectedTableText);
-        Assert.assertEquals(sortedTableText, expectedTableText); // Проверяем, что отсортированный список совпадает с ожидаемым списком
+        Assert.assertEquals("Проверяем, что отсортированный список совпадает с ожидаемым списком", sortedTableText, expectedTableText);
     }
 }

@@ -23,7 +23,7 @@ public class BasePage {
         return new RegistrationPage(driver);
     }
 
-    public CustomersListPage clickOnCustomersButton() {
+    public CustomersListPage clickCustomersButton() {
         customersButton.click();
         return new CustomersListPage(driver);
     }

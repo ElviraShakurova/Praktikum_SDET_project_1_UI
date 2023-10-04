@@ -11,12 +11,15 @@ import pages.BasePage;
 import pages.CustomersListPage;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 @RunWith(Parameterized.class)
 public class SearchTest {
     @Rule
     public BaseTest driverRule = new BaseTest();
+
     private final String searchQuery;
+
     private final String expectedSearchResult;
 
     public SearchTest(String searchQuery, String expectedSearchResult) {
@@ -39,11 +42,11 @@ public class SearchTest {
     @Test
     public void testSearchResults(){
         BasePage basePage = new BasePage(driverRule.getDriver());
-        CustomersListPage customersListPage = basePage.clickOnCustomersButton()
+        CustomersListPage customersListPage = basePage.clickCustomersButton()
                 .clickOnInputSearch()
                 .clearSearch()
                 .setInputSearch(searchQuery);
-        String actualSearchResult = customersListPage.getSearchResults();
+        List<String> actualSearchResult = customersListPage.getTableText();
         Assert.assertTrue(actualSearchResult.contains(expectedSearchResult)); // Проверяем, что фактический результат поиска содержит ожидаемый результат
     }
 }

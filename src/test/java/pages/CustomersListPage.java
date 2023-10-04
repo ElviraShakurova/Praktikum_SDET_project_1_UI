@@ -13,13 +13,15 @@ import java.util.List;
 
 public class CustomersListPage {
     private final WebDriver driver;
+
     private final WebDriverWait wait;
+
     @FindBy(css = "input[placeholder=\'Search Customer\']")
     private WebElement inputSearch;
-    @FindBy(xpath = "//tbody/tr ")
-    private WebElement searchResults;
+
     @FindBy(css = "a[ng-click*='fName']")
     private WebElement firstNameSort;
+
     @FindBy(css = "tbody tr")
     private List<WebElement> tableOfCustomers;
 
@@ -56,11 +58,6 @@ public class CustomersListPage {
     public CustomersListPage setInputSearch(String searchQuery){
         inputSearch.sendKeys(searchQuery);
         return this;
-    }
-
-    @Step("Получение поисковой выдачи после ввода данных в поле поиска")
-    public String getSearchResults() {
-        return searchResults.getText();
     }
 
     @Step("Очистка поля поиска клиента")
